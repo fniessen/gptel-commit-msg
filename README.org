@@ -29,7 +29,7 @@ The generated message is:
 
 Click the following link to download the package:
 
-[[https://raw.githubusercontent.com/fniessen/gptel-commit-msg/main/gptel-commit-msg.el][Download gptel-commit-msg.el]]
+[[https://raw.githubusercontent.com/fniessen/gptel-commit-msg/master/lisp/gptel-commit-msg.el][Download gptel-commit-msg.el]]
 
 or clone the repository:
 
@@ -42,7 +42,7 @@ GitHub will automatically display a Copy button for the command above.
 Add the package to your Emacs configuration:
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path "/path/to/gptel-commit-msg")
+(add-to-list 'load-path "/PATH/TO/gptel-commit-msg")
 (require 'gptel-commit-msg)
 #+end_src
 
@@ -51,7 +51,7 @@ Add the package to your Emacs configuration:
 #+begin_src emacs-lisp
 (use-package gptel-commit-msg
   :after gptel
-  :load-path "/path/to/gptel-commit-msg")
+  :load-path "/PATH/TO/gptel-commit-msg")
 #+end_src
 
 ** Requirements
