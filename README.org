@@ -29,12 +29,12 @@ The generated message is:
 
 Click the following link to download the package:
 
-[[https://raw.githubusercontent.com/FNIESSEN/gptel-commit-msg/main/gptel-commit-msg.el][Download gptel-commit-msg.el]]
+[[https://raw.githubusercontent.com/fniessen/gptel-commit-msg/main/gptel-commit-msg.el][Download gptel-commit-msg.el]]
 
 or clone the repository:
 
 #+begin_src shell
-git clone https://github.com/FNIESSEN/gptel-commit-msg.git
+git clone https://github.com/fniessen/gptel-commit-msg.git
 #+end_src
 
 GitHub will automatically display a Copy button for the command above.
