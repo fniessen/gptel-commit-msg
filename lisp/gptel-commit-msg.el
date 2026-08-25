@@ -1,4 +1,24 @@
-;;; gptel-commit-msg.el --- Generate commit messages from diffs with GPTel -*- lexical-binding: t -*-
+;;; gptel-commit-msg.el --- Use GPTel to generate commit messages from the current diff -*- lexical-binding: t -*-
+
+;; Author: Votre Nom <email@example.com>
+;; URL: https://github.com/fniessen/gptel-commit-msg
+;; Package-Version: 0.1
+;; Package-Requires: ((emacs "27.1") (gptel "0.1"))
+;; Keywords: convenience, vc
+
+;;; Commentary:
+
+;; Generate Git commit messages directly _from diffs_ using GPTel.
+;;
+;; `gptel-commit-msg-generate' sends the current diff to your configured LLM via
+;; GPTel and generates a commit message following Git best practices.
+;;
+;; The generated message is:
+;; - displayed in a dedicated buffer
+;; - copied to the kill ring
+;; - ready to paste into Git, VC-dir or Magit
+
+;;; Code:
 
 (require 'gptel)
 (require 'subr-x)
@@ -8,7 +28,7 @@
   "Buffer used to display generated commit messages.")
 
 ;;;###autoload
-(defun gptel-commit-msg-write ()
+(defun gptel-commit-msg-generate ()
   "Generate a Git commit message from the current diff region or buffer.
 
 The result is shown in `gptel-commit-msg-buffer-name' and copied
@@ -118,11 +138,11 @@ The supplied text contains one or more Git diffs:
 (with-eval-after-load 'diff-mode
   (define-key diff-mode-map
               (kbd "w")
-              #'gptel-commit-msg-write))
+              #'gptel-commit-msg-generate))
 
 ;;;###autoload
 (global-set-key (kbd "C-x v w")
-                #'gptel-commit-msg-write)
+                #'gptel-commit-msg-generate)
 
 (provide 'gptel-commit-msg)
 

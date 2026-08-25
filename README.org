@@ -4,8 +4,8 @@
 
 Generate Git commit messages directly *from diffs* using GPTel.
 
-=gptel-commit-msg= sends the current diff to your configured LLM via GPTel and
-generates a commit message following Git best practices.
+=gptel-commit-msg-generate= sends the current diff to your configured LLM via
+GPTel and generates a commit message following Git best practices.
 
 The generated message is:
 
@@ -110,10 +110,10 @@ Use a more descriptive greeting in user-facing output.
 
 ** Key Bindings
 
-| Key     | Mode      | Command                |
-|---------+-----------+------------------------|
-| w       | diff-mode | gptel-commit-msg-write |
-| C-x v w | global    | gptel-commit-msg-write |
+| Key     | Mode      | Command                   |
+|---------+-----------+---------------------------|
+| w       | diff-mode | gptel-commit-msg-generate |
+| C-x v w | global    | gptel-commit-msg-generate |
 
 ** What the LLM is instructed to do
 
