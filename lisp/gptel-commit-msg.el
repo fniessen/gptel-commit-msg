@@ -135,13 +135,10 @@ The supplied text contains one or more Git diffs:
 
 ;;;###autoload
 (with-eval-after-load 'diff-mode
-  (define-key diff-mode-map
-              (kbd "w")
-              #'gptel-commit-msg-generate))
+  (define-key diff-mode-map (kbd "w") #'gptel-commit-msg-generate))
 
 ;;;###autoload
-(global-set-key (kbd "C-x v w")
-                #'gptel-commit-msg-generate)
+(global-set-key (kbd "C-x v w") #'gptel-commit-msg-generate)
 
 (provide 'gptel-commit-msg)
 
