@@ -1,0 +1,148 @@
+#+TITLE: gptel-commit-msg
+#+OPTIONS: toc:2 num:nil
+
+* gptel-commit-msg
+
+Generate Git commit messages directly *from diffs* using GPTel.
+
+=gptel-commit-msg= sends the current diff (or selected region) to your configured
+LLM via GPTel and generates a commit message following Git best practices.
+
+The generated message is:
+
+- displayed in a dedicated buffer
+- copied to the kill ring
+- ready to paste into Git, VC or Magit
+
+* Features
+
+- Works with any GPTel-supported backend
+- Uses active region or entire buffer
+- Generates concise imperative commit messages
+- Automatically copies the result to the kill ring
+- Direct integration with =diff-mode=
+- No external scripts
+- Single-file package
+
+* Installation
+
+** Manual
+
+Click the following link to download the package:
+
+[[https://raw.githubusercontent.com/FNIESSEN/gptel-commit-msg/main/gptel-commit-msg.el][Download gptel-commit-msg.el]]
+
+or clone the repository:
+
+#+begin_src shell
+git clone https://github.com/FNIESSEN/gptel-commit-msg.git
+#+end_src
+
+GitHub will automatically display a Copy button for the command above.
+
+Add the package to your Emacs configuration:
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/path/to/gptel-commit-msg")
+(require 'gptel-commit-msg)
+#+end_src
+
+** use-package
+
+#+begin_src emacs-lisp
+(use-package gptel-commit-msg
+  :after gptel
+  :load-path "/path/to/gptel-commit-msg")
+#+end_src
+
+* Requirements
+
+- Emacs 29+
+- GPTel
+- Any GPTel backend
+
+Example:
+
+#+begin_src emacs-lisp
+(use-package gptel
+  :config
+  ;; Configure your backend here.
+  )
+#+end_src
+
+* Usage
+
+To generate a commit message from a diff, open a diff buffer and press:
+
+#+begin_src text
+w
+#+end_src
+
+The generated commit message appears in:
+
+#+begin_src text
+*Commit Message*
+#+end_src
+
+and is automatically copied to the kill ring.
+
+* Example
+
+Input diff:
+
+#+begin_src diff
+- (message "hello")
++ (message "Hello world")
+#+end_src
+
+Possible output:
+
+#+begin_src text
+Capitalise greeting message
+#+end_src
+
+or
+
+#+begin_src text
+Improve greeting message formatting
+
+Use a more descriptive greeting in user-facing output.
+#+end_src
+
+* Key Bindings
+
+| Key     | Mode      | Command                |
+|---------+-----------+------------------------|
+| w       | diff-mode | gptel-commit-msg-write |
+| C-x v w | global    | gptel-commit-msg-write |
+
+* What the LLM is instructed to do
+
+The package tells the LLM to:
+
+- analyse the supplied diffs
+- follow Git commit-message conventions
+- use imperative mood
+- keep the subject concise
+- add a body only when useful
+- avoid commentary
+- return only the commit message
+
+* Output
+
+Generated messages are written to:
+
+#+begin_src text
+*Commit Message*
+#+end_src
+
+and copied automatically to the kill ring.
+
+* License
+
+MIT
+
+* Acknowledgements
+
+- GPTel by Karthink
+- The Emacs community
