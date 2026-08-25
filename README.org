@@ -1,12 +1,11 @@
-#+TITLE: gptel-commit-msg
 #+OPTIONS: toc:2 num:nil
 
 * gptel-commit-msg
 
 Generate Git commit messages directly *from diffs* using GPTel.
 
-=gptel-commit-msg= sends the current diff (or selected region) to your configured
-LLM via GPTel and generates a commit message following Git best practices.
+=gptel-commit-msg= sends the current diff to your configured LLM via GPTel and
+generates a commit message following Git best practices.
 
 The generated message is:
 
@@ -14,19 +13,19 @@ The generated message is:
 - copied to the kill ring
 - ready to paste into Git, VC or Magit
 
-* Features
+** Features
 
 - Works with any GPTel-supported backend
-- Uses active region or entire buffer
+- Uses entire buffer
 - Generates concise imperative commit messages
 - Automatically copies the result to the kill ring
 - Direct integration with =diff-mode=
 - No external scripts
 - Single-file package
 
-* Installation
+** Installation
 
-** Manual
+*** Manual
 
 Click the following link to download the package:
 
@@ -47,7 +46,7 @@ Add the package to your Emacs configuration:
 (require 'gptel-commit-msg)
 #+end_src
 
-** use-package
+*** use-package
 
 #+begin_src emacs-lisp
 (use-package gptel-commit-msg
@@ -55,7 +54,7 @@ Add the package to your Emacs configuration:
   :load-path "/path/to/gptel-commit-msg")
 #+end_src
 
-* Requirements
+** Requirements
 
 - Emacs 29+
 - GPTel
@@ -70,7 +69,7 @@ Example:
   )
 #+end_src
 
-* Usage
+** Usage
 
 To generate a commit message from a diff, open a diff buffer and press:
 
@@ -86,7 +85,7 @@ The generated commit message appears in:
 
 and is automatically copied to the kill ring.
 
-* Example
+** Example
 
 Input diff:
 
@@ -109,14 +108,14 @@ Improve greeting message formatting
 Use a more descriptive greeting in user-facing output.
 #+end_src
 
-* Key Bindings
+** Key Bindings
 
 | Key     | Mode      | Command                |
 |---------+-----------+------------------------|
 | w       | diff-mode | gptel-commit-msg-write |
 | C-x v w | global    | gptel-commit-msg-write |
 
-* What the LLM is instructed to do
+** What the LLM is instructed to do
 
 The package tells the LLM to:
 
@@ -128,7 +127,7 @@ The package tells the LLM to:
 - avoid commentary
 - return only the commit message
 
-* Output
+** Output
 
 Generated messages are written to:
 
@@ -138,11 +137,11 @@ Generated messages are written to:
 
 and copied automatically to the kill ring.
 
-* License
+** License
 
 MIT
 
-* Acknowledgements
+** Acknowledgements
 
 - GPTel by Karthink
 - The Emacs community
