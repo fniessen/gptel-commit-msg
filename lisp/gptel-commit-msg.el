@@ -8,15 +8,14 @@
 
 ;;; Commentary:
 
-;; Generate Git commit messages directly _from diffs_ using GPTel.
+;; Generate Git commit messages from a diff buffer using GPTel.
 ;;
-;; `gptel-commit-msg-generate' sends the current diff to your configured LLM via
-;; GPTel and generates a commit message following Git best practices.
+;; The current diff buffer, regardless of how the diff was produced (Magit, VC,
+;; diff-mode, git diff output, etc.), is sent to the configured GPTel backend,
+;; which returns a commit message describing the changes.
 ;;
-;; The generated message is:
-;; - displayed in a dedicated buffer
-;; - copied to the kill ring
-;; - ready to paste into Git, VC-dir or Magit
+;; The resulting message is displayed in a separate buffer and copied to
+;; the kill ring.
 
 ;;; Code:
 
