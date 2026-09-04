@@ -27,7 +27,7 @@
   "Buffer used to display generated commit messages.")
 
 ;;;###autoload
-(defun gptel-commit-msg-generate ()
+(defun gptel-commit-msg ()
   "Generate a Git commit message from the current diff region or buffer.
 
 The result is shown in `gptel-commit-msg-buffer-name' and copied
@@ -135,10 +135,7 @@ The supplied text contains one or more Git diffs:
 
 ;;;###autoload
 (with-eval-after-load 'diff-mode
-  (define-key diff-mode-map (kbd "w") #'gptel-commit-msg-generate))
-
-;;;###autoload
-(global-set-key (kbd "C-x v w") #'gptel-commit-msg-generate)
+  (define-key diff-mode-map (kbd "m") #'gptel-commit-msg))
 
 (provide 'gptel-commit-msg)
 
