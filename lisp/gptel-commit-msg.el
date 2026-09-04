@@ -23,7 +23,7 @@
 (require 'subr-x)
 
 (defconst gptel-commit-msg-buffer-name
-  "*Commit Message*"
+  "*Generated Commit Message*"
   "Buffer used to display generated commit messages.")
 
 ;;;###autoload
@@ -36,7 +36,7 @@ to the kill ring."
 
   (unless (or (use-region-p)
               (> (buffer-size) 0))
-    (user-error "[No content to analyze]"))
+    (user-error "[No diff to analyze]"))
 
   (let* ((system-prompt
           "## 1. Role
@@ -81,7 +81,7 @@ The supplied text contains one or more Git diffs:
              (point-min)
              (point-max)))))
     ;; Notify user that the process has started.
-    (message "[Writing commit message...]")
+    (message "[Generating commit message...]")
 
     ;; Create and clear the buffer initially.
     (with-current-buffer
