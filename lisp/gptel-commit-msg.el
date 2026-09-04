@@ -1,6 +1,6 @@
-;;; gptel-commit-msg.el --- Use GPTel to generate commit messages from the current diff -*- lexical-binding: t -*-
+;;; gptel-commit-msg.el --- Generate Git commit messages using GPTel -*- lexical-binding: t; -*-
 
-;; Author: Votre Nom <email@example.com>
+;; Author: Fabrice Niessen <(concat "fniessen" at-sign "pirilampo.org")>
 ;; URL: https://github.com/fniessen/gptel-commit-msg
 ;; Package-Version: 0.1
 ;; Package-Requires: ((emacs "27.1") (gptel "0.1"))
@@ -8,23 +8,32 @@
 
 ;;; Commentary:
 
-;; Generate Git commit messages from a diff buffer using GPTel.
+;; Generate Git commit messages from diff content using GPTel.
 ;;
-;; The current diff buffer, regardless of how the diff was produced (Magit, VC,
-;; diff-mode, git diff output, etc.), is sent to the configured GPTel backend,
-;; which returns a commit message describing the changes.
+;; The selected region, or the current buffer when no region is active, is sent
+;; to the configured GPTel backend. The content may come from Magit, VC,
+;; diff-mode, git diff output, or any other source of unified or context diffs.
 ;;
-;; The resulting message is displayed in a separate buffer and copied to
-;; the kill ring.
+;; GPTel returns a commit message describing the changes.
+;;
+;; The resulting message is displayed in a separate buffer and copied to the
+;; kill ring.
 
 ;;; Code:
 
 (require 'gptel)
 (require 'subr-x)
 
-(defconst gptel-commit-msg-buffer-name
+(defgroup gptel-commit-msg nil
+  "Generate Git commit messages using GPTel."
+  :group 'tools
+  :prefix "gptel-commit-msg-")
+
+(defcustom gptel-commit-msg-buffer-name
   "*Generated Commit Message*"
-  "Buffer used to display generated commit messages.")
+  "Buffer used to display generated commit messages."
+  :type 'string
+  :group 'gptel-commit-msg)
 
 ;;;###autoload
 (defun gptel-commit-msg ()
@@ -36,7 +45,7 @@ to the kill ring."
 
   (unless (or (use-region-p)
               (> (buffer-size) 0))
-    (user-error "[No diff to analyze]"))
+    (user-error "[Nothing to analyze]"))
 
   (let* ((system-prompt
           "## 1. Role
@@ -133,7 +142,6 @@ The supplied text contains one or more Git diffs:
            "[Failed to generate commit message: %s]"
            (plist-get info :status)))))))
 
-;;;###autoload
 (with-eval-after-load 'diff-mode
   (define-key diff-mode-map (kbd "m") #'gptel-commit-msg))
 
