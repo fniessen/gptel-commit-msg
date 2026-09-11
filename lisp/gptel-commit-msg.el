@@ -148,7 +148,10 @@ The supplied text contains one or more Git diffs:
 
             (message
              "[Failed to generate commit message: %s]"
-             (plist-get info :status))))))))
+             (plist-get info :status))))))
+
+    ;; Immediately restore focus to the previously selected window.
+    (other-window -1)))
 
 (with-eval-after-load 'diff-mode
   (define-key diff-mode-map (kbd "m") #'gptel-commit-msg))
