@@ -146,9 +146,31 @@ The supplied text contains one or more Git diffs:
                     display-buffer-pop-up-window)
                    (inhibit-same-window . t))))
 
-            (message
-             "[Failed to generate commit message: %s]"
-             (plist-get info :status))))))
+            ;; Error handling.
+            (let* ((status (plist-get info :status))
+                   (http-status (plist-get info :http-status))
+                   (error-info (plist-get info :error))
+                   (error-msg (plist-get error-info :message)))
+
+              ;; Keep the full error details for troubleshooting.
+              (with-current-buffer
+                  (get-buffer-create "*gptel-error*")
+                (erase-buffer)
+                (pp info (current-buffer)))
+
+              ;; Show the most useful error message possible.
+              (if error-msg
+                  (message
+                   "[Commit message generation failed] %s"
+                   error-msg)
+                (message
+                   "[Commit message generation failed] HTTP %s (%s)"
+                   http-status
+                   status))
+
+              ;; ;; Display the detailed error buffer.
+              ;; (display-buffer "*gptel-error*")
+              )))))
 
     ;; Immediately restore focus to the previously selected window.
     (other-window -1)))
