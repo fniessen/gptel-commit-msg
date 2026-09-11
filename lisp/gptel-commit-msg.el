@@ -103,50 +103,52 @@ The supplied text contains one or more Git diffs:
         (get-buffer-create gptel-commit-msg-buffer-name)
       (erase-buffer))
 
-    ;; Send request without menu.
-    (gptel-request
-        diff-text
-      :system system-prompt
-      :callback
-      (lambda (response info)
-        (if (stringp response)
-            (with-current-buffer
-                (get-buffer-create gptel-commit-msg-buffer-name)
-              (erase-buffer)
+    ;; Commit message generation does not need tool access.
+    (let ((gptel-tools nil))
+      ;; Send request without menu.
+      (gptel-request
+          diff-text
+        :system system-prompt
+        :callback
+        (lambda (response info)
+          (if (stringp response)
+              (with-current-buffer
+                  (get-buffer-create gptel-commit-msg-buffer-name)
+                (erase-buffer)
 
-              (let ((msg (string-trim response)))
-                ;; Strip Markdown fences.
-                (setq msg
-                      (replace-regexp-in-string
-                       "\\````[^\n]*\n?"
-                       ""
-                       msg))
+                (let ((msg (string-trim response)))
+                  ;; Strip Markdown fences.
+                  (setq msg
+                        (replace-regexp-in-string
+                         "\\````[^\n]*\n?"
+                         ""
+                         msg))
 
-                (setq msg
-                      (replace-regexp-in-string
-                       "\n?```\\'"
-                       ""
-                       msg))
+                  (setq msg
+                        (replace-regexp-in-string
+                         "\n?```\\'"
+                         ""
+                         msg))
 
-                ;; Use apostrophes instead of backticks.
-                (setq msg
-                      (replace-regexp-in-string "`" "'" msg))
+                  ;; Use apostrophes instead of backticks.
+                  (setq msg
+                        (replace-regexp-in-string "`" "'" msg))
 
-                (kill-new msg)          ; Add to kill ring.
-                (insert msg)
+                  (kill-new msg)          ; Add to kill ring.
+                  (insert msg)
 
-                (message
-                 "[Commit message copied to kill ring.]"))
+                  (message
+                   "[Commit message copied to kill ring.]"))
 
-              (display-buffer
-               (current-buffer)
-               '((display-buffer-reuse-window
-                  display-buffer-pop-up-window)
-                 (inhibit-same-window . t))))
+                (display-buffer
+                 (current-buffer)
+                 '((display-buffer-reuse-window
+                    display-buffer-pop-up-window)
+                   (inhibit-same-window . t))))
 
-          (message
-           "[Failed to generate commit message: %s]"
-           (plist-get info :status)))))))
+            (message
+             "[Failed to generate commit message: %s]"
+             (plist-get info :status))))))))
 
 (with-eval-after-load 'diff-mode
   (define-key diff-mode-map (kbd "m") #'gptel-commit-msg))
