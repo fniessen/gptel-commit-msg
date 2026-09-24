@@ -3,7 +3,7 @@
 ;; Author: Fabrice Niessen <(concat "fniessen" at-sign "pirilampo.org")>
 ;; URL: https://github.com/fniessen/gptel-commit-msg
 ;; Package-Version: 0.1
-;; Package-Requires: ((emacs "27.1") (gptel "0.1"))
+;; Package-Requires: ((emacs "29.1") (gptel "0.1"))
 ;; Keywords: convenience, vc
 
 ;;; Commentary:

@@ -4,8 +4,8 @@
 
 Generate Git commit messages directly *from diffs* using GPTel.
 
-=gptel-commit-msg-generate= sends the current diff to your configured LLM via
-GPTel and generates a commit message following Git best practices.
+=gptel-commit-msg= sends the current diff to your configured LLM via GPTel and
+generates a commit message following Git best practices.
 
 The generated message is:
 
@@ -42,7 +42,7 @@ GitHub will automatically display a Copy button for the command above.
 Add the package to your Emacs configuration:
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path "/PATH/TO/gptel-commit-msg")
+(add-to-list 'load-path "/PATH/TO/gptel-commit-msg/lisp")
 (require 'gptel-commit-msg)
 #+end_src
 
@@ -51,7 +51,7 @@ Add the package to your Emacs configuration:
 #+begin_src emacs-lisp
 (use-package gptel-commit-msg
   :after gptel
-  :load-path "/PATH/TO/gptel-commit-msg")
+  :load-path "/PATH/TO/gptel-commit-msg/lisp")
 #+end_src
 
 ** Requirements
@@ -74,13 +74,13 @@ Example:
 To generate a commit message from a diff, open a diff buffer and press:
 
 #+begin_src text
-w
+m
 #+end_src
 
 The generated commit message appears in:
 
 #+begin_src text
-*Commit Message*
+*Generated Commit Message*
 #+end_src
 
 and is automatically copied to the kill ring.
@@ -110,10 +110,9 @@ Use a more descriptive greeting in user-facing output.
 
 ** Key Bindings
 
-| Key     | Mode      | Command                   |
-|---------+-----------+---------------------------|
-| w       | diff-mode | gptel-commit-msg-generate |
-| C-x v w | global    | gptel-commit-msg-generate |
+| Key | Mode      | Command          |
+|-----+-----------+------------------|
+| m   | diff-mode | gptel-commit-msg |
 
 ** What the LLM is instructed to do
 
@@ -132,7 +131,7 @@ The package tells the LLM to:
 Generated messages are written to:
 
 #+begin_src text
-*Commit Message*
+*Generated Commit Message*
 #+end_src
 
 and copied automatically to the kill ring.
