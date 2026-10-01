@@ -69,6 +69,24 @@ Example:
   )
 #+end_src
 
+** Development
+
+Run syntax checks and the ERT test suite with:
+
+#+begin_src shell
+make check test
+#+end_src
+
+Byte-compile the package with:
+
+#+begin_src shell
+make compile
+#+end_src
+
+The Makefile searches =~/.emacs.d= for =gptel.el= automatically. Additional
+load-path directories can be supplied with =LOAD_PATHS=. The tests mock GPTel
+requests and do not contact an LLM.
+
 ** Usage
 
 To generate a commit message from a diff, open a diff buffer and press:
