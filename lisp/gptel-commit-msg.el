@@ -96,7 +96,7 @@ The supplied text contains one or more Git diffs:
              (point-min)
              (point-max)))))
     ;; Notify user that the process has started.
-    (message "[Generating commit message with %s backend, model %s...]"
+    (message "[Generating commit message with %s:%s...]"
          (gptel-backend-name gptel-backend)
          gptel-model)
 

@@ -46,7 +46,7 @@
       (should (equal captured-input "DIFF"))
       (should (null captured-tools))
       (should (string-match-p
-               "Test backend, model test-model"
+               "Test:test-model"
                (car messages))))))
 
 ;; The callback cleans the response and puts it in the buffer and kill ring.
