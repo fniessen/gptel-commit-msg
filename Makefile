@@ -4,7 +4,7 @@ GPTEL_DIR ?= $(shell find "$(HOME)/.emacs.d" -type f -name gptel.el -print -quit
 LOAD_PATHS ?=
 EMACS_LOAD_PATH_ARGS = $(if $(GPTEL_DIR),-L $(GPTEL_DIR)) $(foreach path,$(LOAD_PATHS),-L $(path))
 
-.PHONY: help check test compile clean
+.PHONY: help all check test compile clean
 
 # Show this help.
 help:
@@ -25,6 +25,10 @@ help:
 		next; \
 	} \
 	{ description = "" }' [Mm]akefile
+
+# Run syntax checks, tests, compilation, and cleanup.
+all: check test compile
+	$(MAKE) clean
 
 # Check Lisp syntax.
 check:
