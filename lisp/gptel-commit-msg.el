@@ -177,6 +177,8 @@ The supplied text contains one or more Git diffs:
     ;; Immediately restore focus to the previously selected window.
     (other-window -1)))
 
+(defvar diff-mode-map)
+
 (with-eval-after-load 'diff-mode
   (define-key diff-mode-map (kbd "m") #'gptel-commit-msg))
 
