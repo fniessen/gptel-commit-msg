@@ -8,9 +8,7 @@ EMACS_LOAD_PATH_ARGS = $(if $(GPTEL_DIR),-L $(GPTEL_DIR)) $(foreach path,$(LOAD_
 
 # Show this help.
 help:
-	@echo "Usage: make TARGET"
-	@echo ""
-	@echo "Targets:"
+	@printf '%s\n' "Usage: make TARGET" "" "Targets:"
 	@awk '\
 	/^[[:space:]]*#[[:space:]]/ { \
 		description = $$0; \
