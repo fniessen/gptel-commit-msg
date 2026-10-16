@@ -73,6 +73,32 @@
       (when (get-buffer buffer-name)
         (kill-buffer buffer-name)))))
 
+;; Reasoning events are not errors and do not prevent handling the final response.
+(ert-deftest gptel-commit-msg-ignores-reasoning-events ()
+  (let ((buffer-name "*gptel-commit-msg-test-result*")
+        (gptel-commit-msg-buffer-name "*gptel-commit-msg-test-result*")
+        (kill-ring nil)
+        (kill-ring-yank-pointer nil))
+    (unwind-protect
+        (gptel-commit-msg-test--with-mocks
+          (with-temp-buffer
+            (insert "diff input")
+            (gptel-commit-msg))
+          (let ((callback (plist-get captured-arguments :callback)))
+            (funcall callback '(reasoning . "Thinking...") nil)
+            (funcall callback '(reasoning . t) nil)
+            (should (equal (car messages)
+                           "[Generating commit message with Test:test-model...]"))
+            (funcall callback "Add the new setting" nil))
+          (should (equal (with-current-buffer buffer-name
+                           (buffer-string))
+                         "Add the new setting"))
+          (should (equal (car kill-ring) "Add the new setting"))
+          (should (equal (car messages)
+                         "[Commit message copied to kill ring.]")))
+      (when (get-buffer buffer-name)
+        (kill-buffer buffer-name)))))
+
 (provide 'gptel-commit-msg-test)
 
 ;;; gptel-commit-msg-test.el ends here

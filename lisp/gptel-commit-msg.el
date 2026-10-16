@@ -113,42 +113,48 @@ The supplied text contains one or more Git diffs:
         :system system-prompt
         :callback
         (lambda (response info)
-          (if (stringp response)
-              (with-current-buffer
-                  (get-buffer-create gptel-commit-msg-buffer-name)
-                (erase-buffer)
+          (cond
+           ((stringp response)
+            (with-current-buffer
+                (get-buffer-create gptel-commit-msg-buffer-name)
+              (erase-buffer)
 
-                (let ((msg (string-trim response)))
-                  ;; Strip Markdown fences.
-                  (setq msg
-                        (replace-regexp-in-string
-                         "\\````[^\n]*\n?"
-                         ""
-                         msg))
+              (let ((msg (string-trim response)))
+                ;; Strip Markdown fences.
+                (setq msg
+                      (replace-regexp-in-string
+                       "\\````[^\n]*\n?"
+                       ""
+                       msg))
 
-                  (setq msg
-                        (replace-regexp-in-string
-                         "\n?```\\'"
-                         ""
-                         msg))
+                (setq msg
+                      (replace-regexp-in-string
+                       "\n?```\\'"
+                       ""
+                       msg))
 
-                  ;; Use apostrophes instead of backticks.
-                  (setq msg
-                        (replace-regexp-in-string "`" "'" msg))
+                ;; Use apostrophes instead of backticks.
+                (setq msg
+                      (replace-regexp-in-string "`" "'" msg))
 
-                  (kill-new msg)          ; Add to kill ring.
-                  (insert msg)
+                (kill-new msg)          ; Add to kill ring.
+                (insert msg)
 
-                  (message
-                   "[Commit message copied to kill ring.]"))
+                (message
+                 "[Commit message copied to kill ring.]"))
 
-                (display-buffer
-                 (current-buffer)
-                 '((display-buffer-reuse-window
-                    display-buffer-pop-up-window)
-                   (inhibit-same-window . t))))
+              (display-buffer
+               (current-buffer)
+               '((display-buffer-reuse-window
+                  display-buffer-pop-up-window)
+                 (inhibit-same-window . t)))))
 
-            ;; Error handling.
+           ;; GPTel can report reasoning separately before the final response.
+           ((and (consp response) (eq (car response) 'reasoning))
+            nil)
+
+           ;; Error handling.
+           (t
             (let* ((status (plist-get info :status))
                    (http-status (plist-get info :http-status))
                    (error-info (plist-get info :error))
@@ -166,13 +172,13 @@ The supplied text contains one or more Git diffs:
                    "[Commit message generation failed] %s"
                    error-msg)
                 (message
-                   "[Commit message generation failed] HTTP %s (%s)"
-                   http-status
-                   status))
+                 "[Commit message generation failed] HTTP %s (%s)"
+                 http-status
+                 status))
 
               ;; ;; Display the detailed error buffer.
               ;; (display-buffer "*gptel-error*")
-              )))))
+              ))))))
 
     ;; Immediately restore focus to the previously selected window.
     (other-window -1)))
